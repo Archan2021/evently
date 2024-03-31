@@ -2,8 +2,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import Collection from "@/components/shared/Collection";
+import { getAllEvents } from "@/lib/actions/event.actions";
 
-export default function Home() {
+export default async function Home() {
+  const events = await getAllEvents({
+    query: '',
+    category: '',
+    limit: 6,
+    page: 1,
+  
+  })
+
   return (
     <>
      <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -37,6 +47,16 @@ export default function Home() {
         Search
         CategoryFilter
       </div>
+      <Collection 
+        data={events?.data}
+        emptyTitle="No Events found"
+        emptyStateSubtext="Come back later"
+        collectionType="All_Events"
+        limit={6}
+        page={1}
+        totalPages={2}
+      
+      />
     </section>
 
     </>
